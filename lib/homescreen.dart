@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'homescreen_cards.dart';
+import 'package:hangman/multiplayer_gamescreen.dart';
+import 'package:hangman/single_player_word_options.dart';
+import 'reusable_card.dart';
+import 'constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,25 +17,39 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HomeScreenCards(
+          ReusableCard(
             text: Text(
               'Single Player',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 50.0,
+                fontSize: kReusableCardTextSize,
               ),
             ),
-            onpress: () {},
+            onpress: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SinglePlayerOptions(),
+                ),
+              );
+            },
           ),
-          HomeScreenCards(
+          ReusableCard(
             text: Text(
               'Multi Player',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 50.0,
+                fontSize: kReusableCardTextSize,
               ),
             ),
-            onpress: () {},
+            onpress: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MultiPlayer(),
+                ),
+              );
+            },
           ),
         ],
       ),
