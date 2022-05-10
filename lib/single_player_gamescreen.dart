@@ -32,46 +32,119 @@ class SinglePlayer extends StatefulWidget {
 }
 
 class _SinglePlayerState extends State<SinglePlayer> {
+  String word = 'flutter';
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
       width: double.infinity,
       height: double.infinity,
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Stack(
-              children: [
-                CustomPaint(
-                  //foregroundPainter: DemoForegroundPainter(),
-                  //painter: DemoPainter(),
-                  child: Container(
-                    color: Colors.white,
-                    width: 300.0,
-                    height: 350.0,
-                  ),
-                ),
-              ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.white,
             ),
-            GridView.count(
-              // Create a grid with 2 columns. If you change the scrollDirection to
-              // horizontal, this produces 2 rows.
-              crossAxisCount: 2,
-              // Generate 100 widgets that display their index in the List.
-              children: List.generate(10, (index) {
-                return Center(
-                  child: Text(
-                    'Item $index',
-                    style: Theme.of(context).textTheme.headline5,
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.green,
+              child: GridView.count(
+                crossAxisCount: word.length,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: word
+                        .split('')
+                        .map((e) => letter(e.toUpperCase(), false))
+                        .toList(),
                   ),
-                );
-              }),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+                crossAxisCount:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 6
+                        : 11,
+                children: alphabet.map((e) {
+                  return RawMaterialButton(
+                    fillColor: Colors.blue,
+                    onPressed: () {
+                      print(e);
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Text(e),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
+}
+
+List<String> alphabet = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
+];
+
+Widget letter(String character, bool hidden) {
+  return Container(
+    margin: EdgeInsets.all(2),
+    height: 65.0,
+    width: 50.0,
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(
+        color: Colors.blue, borderRadius: BorderRadius.circular(4.0)),
+    child: Visibility(
+      visible: !hidden,
+      child: Text(
+        character,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 40.0,
+          color: Colors.white,
+        ),
+      ),
+    ),
+  );
 }
