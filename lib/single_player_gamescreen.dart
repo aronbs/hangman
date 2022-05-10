@@ -32,7 +32,8 @@ class SinglePlayer extends StatefulWidget {
 }
 
 class _SinglePlayerState extends State<SinglePlayer> {
-  String word = 'flutter';
+  String word = 'Avengers infinity War';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,16 +54,11 @@ class _SinglePlayerState extends State<SinglePlayer> {
             child: Container(
               color: Colors.green,
               child: GridView.count(
-                crossAxisCount: word.length,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: word
-                        .split('')
-                        .map((e) => letter(e.toUpperCase(), false))
-                        .toList(),
-                  ),
-                ],
+                crossAxisCount: 7,
+                children: word
+                    .split('')
+                    .map((e) => letter(e.toUpperCase(), false))
+                    .toList(),
               ),
             ),
           ),
@@ -75,7 +71,7 @@ class _SinglePlayerState extends State<SinglePlayer> {
                 mainAxisSpacing: 5,
                 crossAxisCount:
                     MediaQuery.of(context).orientation == Orientation.portrait
-                        ? 6
+                        ? 7
                         : 11,
                 children: alphabet.map((e) {
                   return RawMaterialButton(
@@ -86,7 +82,13 @@ class _SinglePlayerState extends State<SinglePlayer> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    child: Text(e),
+                    child: Text(
+                      e,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35.0,
+                      ),
+                    ),
                   );
                 }).toList(),
               ),
@@ -130,19 +132,24 @@ List<String> alphabet = [
 Widget letter(String character, bool hidden) {
   return Container(
     margin: EdgeInsets.all(2),
-    height: 65.0,
-    width: 50.0,
-    padding: EdgeInsets.all(10.0),
+    //height: 65.0,
+    //width: 50.0,
+    padding: EdgeInsets.all(3.0),
     decoration: BoxDecoration(
-        color: Colors.blue, borderRadius: BorderRadius.circular(4.0)),
+      color: Colors.blue,
+      borderRadius: BorderRadius.circular(4.0),
+    ),
     child: Visibility(
       visible: !hidden,
-      child: Text(
-        character,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 40.0,
-          color: Colors.white,
+      child: Center(
+        child: Text(
+          character,
+          style: TextStyle(
+            decoration: TextDecoration.none,
+            fontWeight: FontWeight.bold,
+            fontSize: 35.0,
+            color: Colors.white,
+          ),
         ),
       ),
     ),
