@@ -31,17 +31,27 @@ class _SinglePlayerState extends State<SinglePlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      width: double.infinity,
-      height: double.infinity,
-      child: Column(
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             flex: 3,
             child: Container(
               color: Colors.white30,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  hangmanImage(guesses >= 0, 'images/Mistake-1.png'),
+                  hangmanImage(guesses >= 1, 'images/Mistake-2.png'),
+                  hangmanImage(guesses >= 2, 'images/Mistake-3.png'),
+                  hangmanImage(guesses >= 3, 'images/Mistake-4.png'),
+                  hangmanImage(guesses >= 4, 'images/Mistake-5.png'),
+                  hangmanImage(guesses >= 5, 'images/Mistake-5.png'),
+                  hangmanImage(guesses >= 6, 'images/Mistake-6.png'),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -98,7 +108,7 @@ class _SinglePlayerState extends State<SinglePlayer> {
                                   print('loser');
                                   guesses++;
                                   print(guesses);
-                                  if (guesses == 5) {
+                                  if (guesses == 6) {
                                     print('gameover');
                                   }
                                 }
@@ -180,4 +190,14 @@ Widget letter(String character, bool hidden) {
       ),
     ),
   );
+}
+
+Widget hangmanImage(bool visible, String path) {
+  return Visibility(
+      visible: visible,
+      child: Container(
+        width: 250,
+        height: 250,
+        child: Image.asset(path),
+      ));
 }
