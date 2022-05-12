@@ -1,38 +1,33 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'single_player_word_options.dart';
+import 'category_lists.dart';
+import 'dart:math';
 
 class SinglePlayer extends StatefulWidget {
   SinglePlayer(this.number);
   int number;
-
-  List<String>? categoryListSelection(int number) {
-    if (number == 1) {
-      List<String> marvel = ['eikka', 'anna', 'test'];
-      return marvel;
-    } else if (number == 2) {
-      List<String> dogBreed = ['chiuahua', 'labbi', 'bc'];
-      return dogBreed;
-    } else if (number == 3) {
-      List<String> games = ['halo', 'minecraft'];
-      return games;
-    } else if (number == 4) {
-      List<String> sport = ['bolti', 'karfa'];
-      return sport;
-    } else if (number == 5) {
-      List<String> tvShow = ['friends', 'himym'];
-      return tvShow;
-    } else if (number == 6) {
-      List<String> music = ['akon', 'eminem'];
-      return music;
-    }
-  }
 
   @override
   State<SinglePlayer> createState() => _SinglePlayerState();
 }
 
 class _SinglePlayerState extends State<SinglePlayer> {
-  String word = 'Avengers infinity War';
+  String? word;
+  int guesses = 0;
+  int checkIfWordIsDone = 0;
+  List<String> selectedLetters = []; //nota þetta fyrir litina?
+  List<String> wordList = ['flutter', 'batman', 'superman'];
+  List<String> chosenWord = [];
+  Random random = Random();
+
+  @override
+  void initState() {
+    super.initState();
+
+    chosenWord.add(wordList[random.nextInt(wordList.length)].toUpperCase());
+    word = chosenWord[0].toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,51 +41,82 @@ class _SinglePlayerState extends State<SinglePlayer> {
           Expanded(
             flex: 3,
             child: Container(
-              color: Colors.white,
+              color: Colors.white30,
             ),
           ),
           Expanded(
             flex: 2,
             child: Container(
-              color: Colors.green,
-              child: GridView.count(
-                crossAxisCount: 7,
-                children: word
-                    .split('')
-                    .map((e) => letter(e.toUpperCase(), false))
-                    .toList(),
+              color: Colors.white30,
+              child: Center(
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 8,
+                  children: word!
+                      .split('')
+                      .map((e) =>
+                          letter(e.toUpperCase(), selectedLetters.contains(e)))
+                      .toList(),
+                ),
               ),
             ),
           ),
           Expanded(
             flex: 3,
             child: Container(
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                crossAxisCount:
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                        ? 7
-                        : 11,
-                children: alphabet.map((e) {
-                  return RawMaterialButton(
-                    fillColor: Colors.blue,
-                    onPressed: () {
-                      print(e);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: Text(
-                      e,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35.0,
+              color: Colors.white30,
+              child: Center(
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  crossAxisCount:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? 7
+                          : 11,
+                  children: alphabet.map((e) {
+                    return RawMaterialButton(
+                      fillColor: selectedLetters.contains(e)
+                          ? Colors.white30
+                          : Colors.black,
+                      onPressed: selectedLetters.contains(e)
+                          ? null
+                          : () {
+                              setState(() {
+                                print(e);
+                                print(word);
+                                selectedLetters.add(e);
+                                if (word!.contains(e)) {
+                                  checkIfWordIsDone += 1;
+                                  if (checkIfWordIsDone == word!.length) {
+                                    print('YOU WON!!!');
+                                  }
+                                  print(selectedLetters);
+
+                                  print('bebe');
+                                } else {
+                                  print('loser');
+                                  guesses++;
+                                  print(guesses);
+                                  if (guesses == 5) {
+                                    print('gameover');
+                                  }
+                                }
+                              });
+                            },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                    ),
-                  );
-                }).toList(),
+                      child: Text(
+                        e,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35.0,
+                            color: Colors.red),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
@@ -140,7 +166,7 @@ Widget letter(String character, bool hidden) {
       borderRadius: BorderRadius.circular(4.0),
     ),
     child: Visibility(
-      visible: !hidden,
+      visible: hidden,
       child: Center(
         child: Text(
           character,

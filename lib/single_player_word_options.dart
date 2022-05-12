@@ -13,8 +13,6 @@ enum Category {
 }
 
 class SinglePlayerOptions extends StatelessWidget {
-  Category? selectedCategory;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +43,6 @@ class SinglePlayerOptions extends StatelessWidget {
                     ),
                   ),
                   onpress: () {
-                    selectedCategory = Category.marvel;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
