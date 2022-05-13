@@ -48,8 +48,7 @@ class _SinglePlayerState extends State<SinglePlayer> {
                   hangmanImage(guesses >= 2, 'images/Mistake-3.png'),
                   hangmanImage(guesses >= 3, 'images/Mistake-4.png'),
                   hangmanImage(guesses >= 4, 'images/Mistake-5.png'),
-                  hangmanImage(guesses >= 5, 'images/Mistake-5.png'),
-                  hangmanImage(guesses >= 6, 'images/Mistake-6.png'),
+                  hangmanImage(guesses >= 5, 'images/Mistake-6.png'),
                 ],
               ),
             ),
@@ -93,21 +92,27 @@ class _SinglePlayerState extends State<SinglePlayer> {
                           ? null
                           : () {
                               setState(() {
-                                print(e);
-                                print(word);
+                                //print(e);
+                                //print(word);
                                 selectedLetters.add(e);
+
                                 if (word!.contains(e)) {
-                                  checkIfWordIsDone += 1;
+                                  for (int i = 0; i < word!.length; i++) {
+                                    if (word![i].contains(e)) {
+                                      checkIfWordIsDone += 1;
+                                      //print(checkIfWordIsDone);
+                                    }
+                                  }
                                   if (checkIfWordIsDone == word!.length) {
                                     print('YOU WON!!!');
                                   }
-                                  print(selectedLetters);
+                                  //print(selectedLetters);
 
-                                  print('bebe');
+                                  //print('bebe');
                                 } else {
-                                  print('loser');
+                                  //print('loser');
                                   guesses++;
-                                  print(guesses);
+                                  //print(guesses);
                                   if (guesses == 6) {
                                     print('gameover');
                                   }
