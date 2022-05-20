@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hangman/multiplayer_gamescreen.dart';
-import 'package:hangman/single_player_word_options.dart';
+import 'package:hangman/gamescreen.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
 
@@ -19,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           ReusableCard(
             text: Text(
-              'Single Player',
+              'Start Game!',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: kReusableCardTextSize,
@@ -29,24 +28,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SinglePlayerOptions(),
-                ),
-              );
-            },
-          ),
-          ReusableCard(
-            text: Text(
-              'Multi Player',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: kReusableCardTextSize,
-              ),
-            ),
-            onpress: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MultiPlayer(),
+                  builder: (context) => Gamescreen(),
                 ),
               );
             },
