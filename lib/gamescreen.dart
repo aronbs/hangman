@@ -1,6 +1,63 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+List<String> wordList = [
+  'thanos',
+  'death',
+  'galactus',
+  'mephisto',
+  'nightmare',
+  'ego',
+  'sentry',
+  'dormammu',
+  'surtur',
+  'ultron',
+  'hyperion',
+  'thor',
+  'hulk',
+  'loki',
+  'odin',
+  'eternals',
+  'deadpool',
+  'magneto',
+  'hercules',
+  'nova',
+  'thing',
+  'vision',
+  'namor',
+  'spectrum',
+  'colussus',
+  'storm',
+  'rouge',
+  'iceman',
+  'cyclops',
+  'beast',
+  'antman',
+  'wasp',
+  'batman',
+  'superman',
+  'joker',
+  'robin',
+  'batwoman',
+  'stargirl',
+  'darkseid',
+  'aquaman',
+  'kilowog',
+  'sinestro',
+  'krypto',
+  'zatanna',
+  'bane',
+  'bizarro',
+  'deadshot',
+  'starfire',
+  'catwoman',
+  'venom',
+  'penguin',
+  'brainiac',
+  'flash',
+  'nebula',
+  'mystique',
+];
 
 class Gamescreen extends StatefulWidget {
   @override
@@ -11,17 +68,16 @@ class _GamescreenState extends State<Gamescreen> {
   String? word;
   int guesses = 0;
   int checkIfWordIsDone = 0;
-  List<String> selectedLetters = []; //nota þetta fyrir litina?
-  List<String> wordList = ['abc', 'flutter', 'batman', 'superman'];
+  List<String> selectedLetters = [];
   List<String> chosenWord = [];
+  List<String> finishedWords = [];
   Random random = Random();
 
   @override
   void initState() {
     super.initState();
 
-    //chosenWord.add(wordList[random.nextInt(wordList.length)].toUpperCase());
-    //word = chosenWord[0].toString();
+    wordList.shuffle();
     chosenWord.add(wordList[0].toUpperCase());
     word = chosenWord[0].toString();
   }
@@ -29,6 +85,9 @@ class _GamescreenState extends State<Gamescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+      ),
       backgroundColor: Colors.blue,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,12 +99,15 @@ class _GamescreenState extends State<Gamescreen> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  hangmanImage(guesses >= 0, 'images/Mistake-1.png'),
-                  hangmanImage(guesses >= 1, 'images/Mistake-2.png'),
-                  hangmanImage(guesses >= 2, 'images/Mistake-3.png'),
-                  hangmanImage(guesses >= 3, 'images/Mistake-4.png'),
-                  hangmanImage(guesses >= 4, 'images/Mistake-5.png'),
-                  hangmanImage(guesses >= 5, 'images/Mistake-6.png'),
+                  hangmanImage(guesses >= 0, 'images/Gallows.png'),
+                  hangmanImage(guesses >= 1, 'images/Mistake-1.png'),
+                  hangmanImage(guesses >= 2, 'images/Mistake-2.png'),
+                  hangmanImage(guesses >= 3, 'images/Mistake-3.png'),
+                  hangmanImage(guesses >= 4, 'images/Mistake-4.png'),
+                  hangmanImage(guesses >= 5, 'images/Mistake-5.png'),
+                  hangmanImage(guesses >= 6, 'images/Mistake-6.png'),
+                  hangmanImage(
+                      checkIfWordIsDone == word!.length, 'images/win.png'),
                 ],
               ),
             ),
@@ -89,19 +151,16 @@ class _GamescreenState extends State<Gamescreen> {
                           ? null
                           : () {
                               setState(() {
-                                //print(e);
-                                //print(word);
                                 selectedLetters.add(e);
 
                                 if (word!.contains(e)) {
                                   for (int i = 0; i < word!.length; i++) {
                                     if (word![i].contains(e)) {
                                       checkIfWordIsDone += 1;
-                                      //print(checkIfWordIsDone);
                                     }
                                   }
                                   if (checkIfWordIsDone == word!.length) {
-                                    print('YOU WON!!!');
+                                    guesses = 0;
                                     showDialog(
                                       barrierDismissible: false,
                                       context: context,
@@ -125,6 +184,7 @@ class _GamescreenState extends State<Gamescreen> {
                                                 onPressed: () {
                                                   setState(() {
                                                     wordList.removeAt(0);
+                                                    wordList.add(chosenWord[0]);
                                                     chosenWord.clear();
                                                     chosenWord.add(wordList[0]
                                                         .toUpperCase());
@@ -149,15 +209,9 @@ class _GamescreenState extends State<Gamescreen> {
                                       ),
                                     );
                                   }
-                                  //print(selectedLetters);
-
-                                  //print('bebe');
                                 } else {
-                                  //print('loser');
                                   guesses++;
-                                  //print(guesses);
                                   if (guesses == 6) {
-                                    print('gameover');
                                     showDialog(
                                       barrierDismissible: false,
                                       context: context,
@@ -172,7 +226,7 @@ class _GamescreenState extends State<Gamescreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text('WRONG!'),
+                                            Text('WRONG!\n The word was $word!')
                                           ],
                                         ),
                                         actions: [
@@ -181,6 +235,7 @@ class _GamescreenState extends State<Gamescreen> {
                                                 onPressed: () {
                                                   setState(() {
                                                     wordList.removeAt(0);
+                                                    wordList.add(chosenWord[0]);
                                                     chosenWord.clear();
                                                     chosenWord.add(wordList[0]
                                                         .toUpperCase());
