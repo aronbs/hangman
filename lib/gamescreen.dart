@@ -1,63 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-
-List<String> wordList = [
-  'thanos',
-  'death',
-  'galactus',
-  'mephisto',
-  'nightmare',
-  'ego',
-  'sentry',
-  'dormammu',
-  'surtur',
-  'ultron',
-  'hyperion',
-  'thor',
-  'hulk',
-  'loki',
-  'odin',
-  'eternals',
-  'deadpool',
-  'magneto',
-  'hercules',
-  'nova',
-  'thing',
-  'vision',
-  'namor',
-  'spectrum',
-  'colussus',
-  'storm',
-  'rouge',
-  'iceman',
-  'cyclops',
-  'beast',
-  'antman',
-  'wasp',
-  'batman',
-  'superman',
-  'joker',
-  'robin',
-  'batwoman',
-  'stargirl',
-  'darkseid',
-  'aquaman',
-  'kilowog',
-  'sinestro',
-  'krypto',
-  'zatanna',
-  'bane',
-  'bizarro',
-  'deadshot',
-  'starfire',
-  'catwoman',
-  'venom',
-  'penguin',
-  'brainiac',
-  'flash',
-  'nebula',
-  'mystique',
-];
+import 'visability_functions.dart';
 
 class Gamescreen extends StatefulWidget {
   @override
@@ -71,7 +14,6 @@ class _GamescreenState extends State<Gamescreen> {
   List<String> selectedLetters = [];
   List<String> chosenWord = [];
   List<String> finishedWords = [];
-  Random random = Random();
 
   @override
   void initState() {
@@ -91,6 +33,7 @@ class _GamescreenState extends State<Gamescreen> {
       backgroundColor: Colors.blue,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             flex: 3,
@@ -314,39 +257,59 @@ List<String> alphabet = [
   'Z'
 ];
 
-Widget letter(String character, bool hidden) {
-  return Container(
-    margin: EdgeInsets.all(2),
-    //height: 65.0,
-    //width: 50.0,
-    padding: EdgeInsets.all(3.0),
-    decoration: BoxDecoration(
-      color: Colors.blue,
-      borderRadius: BorderRadius.circular(4.0),
-    ),
-    child: Visibility(
-      visible: hidden,
-      child: Center(
-        child: Text(
-          character,
-          style: TextStyle(
-            decoration: TextDecoration.none,
-            fontWeight: FontWeight.bold,
-            fontSize: 35.0,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget hangmanImage(bool visible, String path) {
-  return Visibility(
-      visible: visible,
-      child: Container(
-        width: 250,
-        height: 250,
-        child: Image.asset(path),
-      ));
-}
+List<String> wordList = [
+  'thanos',
+  'death',
+  'galactus',
+  'mephisto',
+  'ego',
+  'sentry',
+  'dormammu',
+  'surtur',
+  'ultron',
+  'hyperion',
+  'thor',
+  'hulk',
+  'loki',
+  'odin',
+  'eternals',
+  'deadpool',
+  'magneto',
+  'hercules',
+  'nova',
+  'thing',
+  'vision',
+  'namor',
+  'spectrum',
+  'colussus',
+  'storm',
+  'rouge',
+  'iceman',
+  'cyclops',
+  'beast',
+  'antman',
+  'wasp',
+  'batman',
+  'superman',
+  'joker',
+  'robin',
+  'batwoman',
+  'stargirl',
+  'darkseid',
+  'aquaman',
+  'kilowog',
+  'sinestro',
+  'krypto',
+  'zatanna',
+  'bane',
+  'bizarro',
+  'deadshot',
+  'starfire',
+  'catwoman',
+  'venom',
+  'penguin',
+  'brainiac',
+  'flash',
+  'nebula',
+  'mystique',
+];
