@@ -293,7 +293,7 @@ List wordList = [
   ['ultron', 'is a robot'],
   ['hyperion', 'member of squadron sinister'],
   ['thor', 'has a weapon that few people can wield'],
-  ['hulk', ''],
+  ['hulk', 'strongest avenger?'],
   ['loki', 'a cunning trickster'],
   ['odin', 'god of wisdom, poetry and death'],
   ['deadpool', 'disfigured mercenary'],
